@@ -83,7 +83,43 @@ tabpromo <- dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PR
   write.csv2(clitbp,file =clitbp_wd_csv )
   
   
+  # clitbp comb
+  
+  
+  ## save clitbp
+  
+  clitbpcomb <- dbGetQuery(con2,"SELECT * FROM CLITBPCOMB") 
+  
+  View(clitbpcomb)
+  
+  clitbpcomb_wd <-  paste0("C:\\Users\\Repro\\Documents\\R\\ADM\\PROMODOMES\\BASES\\clitbpcomb","_",format(Sys.Date(),"%d_%m_%y"),".RData")
+  
+  save(clitbpcomb,file =clitbpcomb_wd)  
+  
+  clitbpcomb_wd_csv <-  paste0("C:\\Users\\Repro\\Documents\\R\\ADM\\PROMODOMES\\BASES\\clitbpcomb","_",format(Sys.Date(),"%d_%m_%y"),".csv")
+  
+  
+  write.csv2(clitbpcomb,file =clitbpcomb_wd_csv )
+  
+  
+  dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%' AND TBPTABCOMB='S'") %>% View()
   
 
-
+  ## save tbpcombpropro
+  
+  tbpcombpropro <- dbGetQuery(con2,"SELECT * FROM TBPCOMBPROPRO") 
+  
+  View(tbpcombpropro)
+  
+  tbpcombpropro_wd <-  paste0("C:\\Users\\Repro\\Documents\\R\\ADM\\PROMODOMES\\BASES\\tbpcombpropro","_",format(Sys.Date(),"%d_%m_%y"),".RData")
+  
+  save(tbpcombpropro,file =tbpcombpropro_wd)  
+  
+  tbpcombpropro_wd_csv <-  paste0("C:\\Users\\Repro\\Documents\\R\\ADM\\PROMODOMES\\BASES\\tbpcombpropro","_",format(Sys.Date(),"%d_%m_%y"),".csv")
+  
+  
+  write.csv2(tbpcombpropro,file =tbpcombpropro_wd_csv )
+  
+  
+  dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%' AND TBPTABCOMB='S'") %>% View()
   

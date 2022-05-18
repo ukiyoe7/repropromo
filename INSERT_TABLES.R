@@ -1,6 +1,6 @@
 library(DBI)
 library(dplyr)
-
+library(googlesheets4)
 
 con3 <- dbConnect(odbc::odbc(), "repro_prod", timeout = 10)
 
@@ -61,3 +61,24 @@ clipromo3 <- dbGetQuery(con2,"
 
 
 View(clipromo3) 
+
+
+## CLITABCOMB INSERT TB22
+
+
+clipromo4 <- dbGetQuery(con2,"
+                         WITH TB AS(
+                         SELECT TBPCODIGO FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%')
+                         
+                         SELECT DISTINCT C.TBPCODIGO,CLICODIGO FROM CLITBPCOMB C
+                         INNER JOIN TB ON C.TBPCODIGO=TB.TBPCODIGO") 
+
+
+View(clipromo4) 
+
+
+clipromo4 <- anti_join(cli,clipromo4,by="CLICODIGO") 
+
+range_write("1D4oEhg494scZASLyHFH9Z-uHKK55aGk0QcMkI-uyMxA",data=clipromo4,sheet = "DADOS",
+            range = "A1") 
+
