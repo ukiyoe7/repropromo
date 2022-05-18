@@ -70,6 +70,8 @@ tabpromo <- dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PR
    ## save clitbp
    
    clitbp <- dbGetQuery(con2,"SELECT * FROM CLITBP") 
+   
+   View(clitbp)
   
    clitbp_wd <-  paste0("C:\\Users\\Repro\\Documents\\R\\ADM\\PROMODOMES\\BASES\\clitbp","_",format(Sys.Date(),"%d_%m_%y"),".RData")
   

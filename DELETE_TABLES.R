@@ -3,6 +3,7 @@ library(dplyr)
 
 
 con3 <- dbConnect(odbc::odbc(), "repro_prod", timeout = 10)
+con2 <- dbConnect(odbc::odbc(), "repro_prod", timeout = 10)
 
 
 ## CLEAN TABLE PROD 2085
@@ -19,15 +20,20 @@ View(tabpromo_2)
 
 ## CLEAN TABLE CLIENTS
 
+clipromo2 <- dbGetQuery(con2,"
+                         WITH TB AS(
+                         SELECT TBPCODIGO FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%')
+                         
+                         SELECT DISTINCT C.TBPCODIGO FROM CLITBP C
+                         INNER JOIN TB ON C.TBPCODIGO=TB.TBPCODIGO") 
+
+q <- data.frame(TBPCODIGO=NA)
 
 
-z <- data.frame(TBPCODIGO=NA,PROCODIGO=NA,
-                TBPPCDESCTO2=NA,TBPPCDESCTO=NA)
 
-for (i in 1:nrow(x)) {
-  z[i,] <- x[i,]
-  queryy <- paste("DELETE FROM CLITBP WHERE TBPCODIGO=",z[i,"TBPCODIGO"],",'",z[i,"PROCODIGO"],"',",z[i,"TBPPCDESCTO2"],",",z[i,"TBPPCDESCTO"],")",sep = "")
-  
-  dbSendQuery(con3,queryy)
-  
+for (i in 1:nrow(clipromo2)) {
+  q[i,] <- clipromo2[i,]
+  queryq <- paste("DELETE FROM CLITBP WHERE TBPCODIGO=",q[i,"TBPCODIGO"],";",sep = "")
+  dbSendQuery(con3,queryq)
 }
+
