@@ -39,6 +39,19 @@ tabpromo <- dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PR
   
   write.csv2(tabpromo_prod,file =tabpromo_prod_wd_csv )
   
+  
+  
+  tabpromo_prod <- dbGetQuery(con2,"
+                             WITH PROD AS (SELECT PROCODIGO,PRODESCRICAO FROM PRODU)
+                              
+                              SELECT TP.*,PRODESCRICAO FROM TBPPRODU TP
+                              INNER JOIN PRODU P ON TP.PROCODIGO=P.PROCODIGO 
+                              WHERE TBPCODIGO='2085'") 
+  
+  View(tabpromo_prod)
+  
+  
+  
   # save all products
   
   tbpprodu <- dbGetQuery(con2,"SELECT * FROM TBPPRODU") 
@@ -121,5 +134,23 @@ tabpromo <- dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PR
   write.csv2(tbpcombpropro,file =tbpcombpropro_wd_csv )
   
   
-  dbGetQuery(con2,"SELECT * FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%' AND TBPTABCOMB='S'") %>% View()
+  dbGetQuery(con2,"SELECT * FROM TABPRECO 
+             WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%' AND TBPTABCOMB='S'") %>% View()
   
+  ## view products on tables
+  
+  
+  comb_promo_prod <-dbGetQuery(con2,"
+             WITH TBCOMB AS (SELECT TBPCODIGO FROM TABPRECO 
+             WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%' AND TBPTABCOMB='S')
+             
+             SELECT T.TBPCODIGO FROM TBPCOMBPROPRO T
+             INNER JOIN TBCOMB TB ON TB.TBPCODIGO=T.TBPCODIGO
+             WHERE PROCODIGOA='LD0471'   
+                        ") 
+  
+  View(comb_promo_prod)
+  
+  
+  
+
