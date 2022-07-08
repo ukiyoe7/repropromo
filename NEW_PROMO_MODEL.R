@@ -28,7 +28,7 @@ View(price)
 
 
 inner_join(TAB,price,by="PROCODIGO") %>% 
-            mutate(DESCONTO=round(((VALOR/PRECO)-1)*100,2),2) %>% View()
+            mutate(DESCONTO=(round(((VALOR/PRECO)-1)*100,2)*-1)+0.01) %>% View()
 
 
 

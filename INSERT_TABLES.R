@@ -54,10 +54,12 @@ for (i in 1:nrow(clien4)) {
 
 clipromo3 <- dbGetQuery(con2,"
                          WITH TB AS(
-                         SELECT TBPCODIGO FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%')
+                         SELECT TBPCODIGO FROM TABPRECO WHERE TBPDESCRICAO LIKE '%PROMO DO MES MAI-JUN 22%'
+                         WHERE TBPTABCOMB='N')
                          
                          SELECT DISTINCT C.TBPCODIGO,CLICODIGO FROM CLITBP C
-                         INNER JOIN TB ON C.TBPCODIGO=TB.TBPCODIGO") 
+                         INNER JOIN TB ON C.TBPCODIGO=TB.TBPCODIGO
+                        ") 
 
 
 View(clipromo3) 
